@@ -1,0 +1,17 @@
+body{
+    height: auto;
+}
+p{
+    font: Consolas;
+    position:float;
+    line-height:130%;
+}
+hr{
+    width:auto;
+}
+.main{
+    position:float;
+}
+.text{
+    position:float
+}
