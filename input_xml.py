@@ -7,6 +7,7 @@ import xml.etree
 import hashlib 
 import Cookie
 import cgitb; cgitb.enable()
+import copy
 
 from sys import stdout, stderr
 from xml.etree import ElementTree as et
@@ -24,7 +25,8 @@ def draw_lines(level, lines):
             lines[each_level + 1] = "<p>/\\</p><br />" 
         else:
             lines[each_level + 1] = "<p>|</p><br />"
-
+#FIXME:
+#   using print multi-lines is not good
     #for each_level in level.values():
     #    if 1 != each_level:
     #        print """
@@ -36,17 +38,36 @@ def draw_lines(level, lines):
     #        <br />
     #    """
 
+def sort_nodes(fp, f_name):
+    et_instance = et.ElementTree()
+    fp.seek(0); e_pro = et_instance.parse(fp) 
+    e_arr = e_pro.getchildren()
+
+    limit = len(e_arr); count = 0
+    while(count < limit):
+        alc = count
+        while(alc < limit):
+            if int(e_arr[alc].attrib["step"]) < int(e_arr[count].attrib["step"]): e_arr[alc], e_arr[count] = e_arr[count], e_arr[alc]
+            alc += 1
+        count += 1
+#DEBUG:
+#    print fp.read()
+    fp = file(f_name, "w+r")
+    et_instance.write(fp)
+
 def parse_xml(fp, f_name):
     if fp:
+        sort_nodes(fp, f_name)
         et_instance = et.ElementTree()
-        e = et_instance.parse(fp)
+        fp.seek(0); e = et_instance.parse(fp) 
+        
         level = {}; lines = [] 
         for item in e.findall("node"):
             #draw_node(item.attrib["step"], item.attrib["name"], lines)     
             if level.has_key(int(item.attrib["step"])): level[int(item.attrib["step"])] += 1
             else: level[int(item.attrib["step"])] = 1
         #draw_lines(level, lines) 
-
+#FIXME
         #for item, c in zip(e.findall("node"), range(len(level))):
         #    if 1 == level[c]:
         #        draw_node(item.attrib["step"], item.attrib["name"], lines)
@@ -82,12 +103,13 @@ def get_form_data():
     upload_dir = "/tmp"
     form = cgi.FieldStorage()
     f_item = form["file_name"]
-
+#FIXME:
+#   using hash is better
     #f_store = file(os.path.join(upload_dir, hashlib.md5(f_item.value).digest()), "wb")
     f_store = file(os.path.join(upload_dir, f_item.filename), "wb")
     f_store.write(f_item.file.read())
     f_store.close()
-    fp = file(os.path.join(upload_dir, f_item.filename), "r")
+    fp = file(os.path.join(upload_dir, f_item.filename), "r+w")
     parse_xml(fp, os.path.join(upload_dir, f_item.filename))
     fp.close()
     return os.path.join(upload_dir, f_item.filename)

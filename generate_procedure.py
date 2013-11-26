@@ -57,7 +57,8 @@ def form_graph(fp):
         count += 1
     return graph
 
-#DEBUG
+#FIXME:
+#   mind is not clear, matrix is fine, but output wrong routines
     #while count <= limit:
     #    arr_index = 0
     #    graph[count] = []
