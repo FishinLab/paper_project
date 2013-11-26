@@ -12,7 +12,7 @@ from sys import stdout, stderr
 from xml.etree import ElementTree as et
 
 def draw_node(step, name, lines):
-    if 0 == step: 
+    if str(0) == step: 
         lines.append("".join(["<br /><p>step:", step, "<p align = 'center'>[name:", name,"]</p></p>"])) 
     else:
         lines.append("".join(["<br /><p align = 'center'>|</p><p>step:", step, "<p align = 'center'>[name:", name,"]</p></p>"])) 
@@ -100,7 +100,7 @@ if "__main__" == __name__:
     print "Content-type: text/html\n"
     print "<html><body>"
 #DEBUG
-    print "Cookie data: " + os.environ.get("HTTP_COOKIE")
+#    print "Cookie data: " + os.environ.get("HTTP_COOKIE")
     print "<p>xml description file uploaded</p>"
     print "<a href = '/cgi-bin/show_graph.py'>graph</a>"
     print "</body></html>"

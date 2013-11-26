@@ -103,4 +103,5 @@ if "__main__" == __name__:
             else: print step_name + "  ->  "
             #print "".join([graph[g][l].attrib["name"], " -> "])
         print "</p>"
+    print "<a href = '/paper/input_xml.html'>return back</a>"
 

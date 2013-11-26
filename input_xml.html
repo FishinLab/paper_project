@@ -1,11 +1,23 @@
 <html>
     <head>
     <title></title>
+    <link rel = "stylesheet" href = "style.css" type = "text/css"/>
     </head>
     <body>
-        <form method = "post" action = "/cgi-bin/input_xml.py" enctype="multipart/form-data">
-            <input type="FILE" name = "file_name" ><br >
-            <input type="SUBMIT" name = "submit" >
-        </form>
+        <div id = "main">
+            <div class = "text">
+                <p class = "routines">
+                    <p>1. upload your description xml file to the server</p>
+                    <p>2. when uploading finished, this tool will parse xml file automatically</p>
+                    <p>3. click super link to check graph which xml file descripted</p>
+                    <p>4. generate testing procedure</p>
+                </p>
+            </div>
+            <hr />
+            <form method = "post" action = "/cgi-bin/input_xml.py" enctype="multipart/form-data">
+                <input type="FILE" name = "file_name" ><br >
+                <input type="SUBMIT" name = "submit" >
+            </form>
+        </div>
     </body>
 </html>
